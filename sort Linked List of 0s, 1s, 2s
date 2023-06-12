@@ -1,0 +1,129 @@
+/*
+Following is the class structure of the Node class:
+
+class Node
+{
+public:
+    int data;
+    Node *next;
+    Node()
+    {
+        this->data = 0;
+        next = NULL;
+    }
+    Node(int data)
+    {
+        this->data = data; 
+        this->next = NULL;
+    }
+    Node(int data, Node* next)
+    {
+        this->data = data;
+        this->next = next;
+    }
+};
+*/
+void insert(Node*&tail,Node*curr){
+    tail->next=curr;
+    tail=curr;
+}
+Node* sortList(Node *head){
+    // Write your code here.
+    
+    //DATA REPLACEMENT TECHNIQUE
+    //TC : O(n)
+    //SC : O(1)
+    // int zero=0;
+    // int one=0;
+    // int two=0;
+
+    // Node*temp=head;
+
+    // while(temp!=NULL){
+    //     if(temp->data==0){
+    //         zero++;
+    //     }
+    //     else if(temp->data==1){
+    //         one++;
+    //     }
+    //     else if(temp->data==2){
+    //         two++;
+    //     }
+    //     temp=temp->next;
+    // }
+    // temp=head;
+
+    // while(temp!=NULL){
+    //     if(zero!=0){
+    //         temp->data=0;
+    //         zero--;
+    //     }
+    //     else if(one!=0){
+    //         temp->data=1;
+    //         one--;
+    //     }
+    //     else if(two!=0){
+    //         temp->data=2;
+    //         two--;
+    //     }
+    //     temp=temp->next;
+    // }
+    // return head;
+    
+    
+    //NO DATA REPLACEMENT IS ALLOWED
+    //TC : O(N)
+    //SC : O(1)
+    //dummynode for 0
+    Node*zerohead=new Node(-1);
+    Node*zerotail=zerohead;
+    //dummynode for 1
+    Node*onehead=new Node(-1);
+    Node*onetail=onehead;
+    //dummynode for 2
+    Node*twohead=new Node(-1);
+    Node*twotail=twohead;
+
+    Node*curr=head;
+
+
+    while(curr!=NULL){
+        int value=curr->data;
+
+        if(value==0){
+            insert(zerotail,curr);
+        }
+        else if(value==1){
+            insert(onetail,curr);
+        }
+        else if(value==2){
+            insert(twotail,curr);
+        }
+        curr=curr->next;
+    }
+
+    //merge these 3 linked list
+
+    if(onehead->next!=NULL){
+        zerotail->next=onehead->next;
+
+    }
+    else{
+        zerotail->next=twohead->next;
+    }
+    onetail->next=twohead->next;
+    twotail->next=NULL;
+
+    //setup head
+
+    head=zerohead->next;
+
+    //delete dummynodes
+
+    delete zerohead;
+    delete onehead;
+    delete twohead;
+
+    return head;
+
+}
