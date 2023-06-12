@@ -1,0 +1,42 @@
+#include <bits/stdc++.h>
+
+void swap(int *a,int *b){
+    int temp=*a;
+    *a=*b;
+    *b=temp;
+}
+vector<int> ninjaAndSortedArrays(vector<int>& arr1, vector<int>& arr2, int m, int n) {
+	// Write your code here. 
+        int s= arr1.size()-1;
+        int p= s-(n-1);
+        if(arr1[arr1.size()-1]==0){
+            arr1.erase(arr1.begin()+p,arr1.begin()+s+1);
+        }
+        copy(arr2.begin(),arr2.end(),back_inserter(arr1));
+        sort(arr1.begin(),arr1.end());
+        int i,key;
+        for(int j=1;j<arr1.size();j++){
+            key=arr1[j];
+            i=j-1;
+
+            while(i>=0 && arr1[i]>key){
+                arr1[i+1]=arr1[i];
+                i--;
+            }       
+            arr1[i+1]=key;
+            }
+            return arr1;
+        // int i,iom;
+        // for( i=0;i<arr1.size()-1;i++){
+        //     iom=i;
+        //     for(int j=i+1;j<arr1.size();j++){
+        //         if(arr1[j]<arr1[iom]){
+        //             iom=j;
+        //         }
+        //     }
+        // }
+        // if(iom!=i){
+        //     swap(&arr1[i],&arr1[iom]);
+        // }
+        // return arr1;
+}
