@@ -1,0 +1,106 @@
+/****************************************************************
+
+    Following is the class structure of the Node class:
+
+        class Node
+        {
+        public:
+            int data;
+            Node *next;
+            Node()
+            {
+                this->data = 0;
+                next = NULL;
+            }
+            Node(int data)
+            {
+                this->data = data;
+                this->next = NULL;
+            }
+            Node(int data, Node* next)
+            {
+                this->data = data;
+                this->next = next;
+            }
+        };
+
+
+*****************************************************************/
+#include<map>
+
+Node* detectCycle(NOde*head){
+    if(head==NULL || head->next==NULL){
+        return NULL;
+    }
+
+    Node*slow=head;
+    Node*fast=head;
+
+    while(fast!=NULL && slow!=NULL && fast->next!=NULL){
+        fast=fast->next;
+        slow=slow->next;
+
+        if(slow==fast){
+            return slow;
+        }
+    }
+    return NULL;
+}
+
+Node* getbeginning(Node*head){
+    if(head==NULL) return NULL;
+
+    Node* intersection = detectCycle(head);
+
+    Node*slow=head;
+    while(slow!=intersection){
+        slow=slow->next;
+        intersection=intersection->next;
+    }
+    return slow;
+}
+
+void removeloop(Node*head){
+    if(head==NULL) return;
+
+    Node* startofloop = getbeginning(head);
+    Node*temp=startofloop;
+
+    while(temp!=startofloop){
+        temp=temp->next;
+    }
+    temp->next=NULL;
+}
+
+bool detectCycle(Node *head)
+{
+	//	Write your code here
+    if(head==NULL || head->next==NULL){
+        return false;
+    }
+
+    Node*slow=head;
+    Node*fast=head;
+
+        while(slow!=NULL &&fast!=NULL && fast->next!=NULL){
+            slow=slow->next;
+            fast=fast->next->next;
+
+            if(slow==fast){
+            return true;
+        }
+        }
+        return false;
+    //   map<Node*,bool>visited;
+
+    //     Node*temp=head;
+
+    //     while(temp!=NULL){
+    //         if(visited[temp]==true){
+    //             return true;
+    //         }
+    //         visited[temp]==true;
+    //         temp=temp->next;
+    //     }
+    //     return false;
+}
